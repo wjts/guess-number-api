@@ -1,0 +1,32 @@
+@host = localhost:8080
+@resource = hints
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdCIsImV4cCI6MTY1ODY3NzY3MX0.QD4cOa22aS0FOxaLc3Go3gf8yM98cSrkNeFnqCdNFqI
+
+POST http://{{host}}/v1/{{resource}} HTTP/1.1
+content-type: application/json
+authorization: {{token}}
+
+{
+    "date": "2022-07-24",
+    "hint": 50
+}
+###
+
+PATCH http://{{host}}/v1/{{resource}}/2022-07-24 HTTP/1.1
+content-type: application/json
+authorization: {{token}}
+
+{
+    "hint": 52
+}
+###
+
+GET http://{{host}}/v1/{{resource}} HTTP/1.1
+content-type: application/json
+authorization: {{token}}
+###
+
+GET http://{{host}}/v1/{{resource}}/2022-07-24 HTTP/1.1
+content-type: application/json
+authorization: {{token}}
+###
