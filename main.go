@@ -15,7 +15,7 @@ func main() {
 	database.Migrate()
 
 	router := initRouter()
-	router.Run("localhost:8080")
+	router.Run("0.0.0.0:8080")
 }
 
 func initRouter() *gin.Engine {
