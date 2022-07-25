@@ -12,13 +12,15 @@ var jwtKey = []byte("mu!gK2$M]D*%Ivvm<B[LTKN9\"~GugX+,C%8O;}~498")
 
 type JWTClaim struct {
 	Email string `json:"email"`
+	Admin bool   `json:"admin"`
 	jwt.RegisteredClaims
 }
 
-func GenerateJWT(email string) (tokenString string, err error) {
+func GenerateJWT(email string, admin bool) (tokenString string, err error) {
 	expirationTime := time.Now().Add(1 * time.Hour)
 	claims := &JWTClaim{
 		Email: email,
+		Admin: admin,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 		},
