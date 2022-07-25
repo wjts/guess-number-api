@@ -37,7 +37,7 @@ func MakeGuess(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusCreated, gin.H{"ID": guess.ID})
+	context.JSON(http.StatusCreated, guess)
 }
 
 type editGuess struct {

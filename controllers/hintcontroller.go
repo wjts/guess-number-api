@@ -36,7 +36,7 @@ func CreateHint(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusCreated, gin.H{"ID": hint.ID})
+	context.JSON(http.StatusCreated, hint)
 }
 
 type editHint struct {
