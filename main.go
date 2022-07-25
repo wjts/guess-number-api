@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	database.Connect("sqlite.db")
+	database.Connect("db/sqlite.db")
 	database.Migrate()
 
 	router := initRouter()
@@ -20,6 +20,7 @@ func main() {
 
 func initRouter() *gin.Engine {
 	router := gin.Default()
+	router.SetTrustedProxies(nil)
 
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"*"},

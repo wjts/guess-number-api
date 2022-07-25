@@ -3,6 +3,7 @@ package controllers
 import (
 	"errors"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/wjts/guess-number-api/database"
@@ -22,9 +23,13 @@ func CreateHint(context *gin.Context) {
 		return
 	}
 
+	if _, err := time.Parse("2006-01-02", hintRequest.Date); err != nil {
+		context.Status(http.StatusBadRequest)
+		return
+	}
+
 	var user models.User
 	database.Instance.First(&user, "email = ?", context.GetString("UserEmail"))
-
 	hint := models.Hint{Date: hintRequest.Date, Hint: hintRequest.Hint, CreatedBy: user.ID}
 	if err := database.Instance.Create(&hint).Error; err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

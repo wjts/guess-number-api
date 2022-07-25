@@ -3,6 +3,7 @@ package controllers
 import (
 	"errors"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/wjts/guess-number-api/database"
@@ -19,6 +20,11 @@ func MakeGuess(context *gin.Context) {
 	var guessRequest newGuess
 	if err := context.ShouldBindJSON(&guessRequest); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if _, err := time.Parse("2006-01-02", guessRequest.Date); err != nil {
+		context.Status(http.StatusBadRequest)
 		return
 	}
 
