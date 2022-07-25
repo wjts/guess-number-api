@@ -1,0 +1,32 @@
+@host = localhost:8080
+@resource = answers
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdCIsImFkbWluIjp0cnVlLCJleHAiOjE2NTg3NjY1MTF9.dvI5hLDONUvBOY4-0Z5B9h-Uf8RFqcWQpgQWltIGcAw
+
+POST http://{{host}}/v1/{{resource}} HTTP/1.1
+content-type: application/json
+authorization: {{token}}
+
+{
+    "date": "2022-07-25",
+    "answer": 52
+}
+###
+
+PATCH http://{{host}}/v1/{{resource}}/2022-07-24 HTTP/1.1
+content-type: application/json
+authorization: {{token}}
+
+{
+    "answer": 53
+}
+###
+
+GET http://{{host}}/v1/{{resource}} HTTP/1.1
+content-type: application/json
+authorization: {{token}}
+###
+
+GET http://{{host}}/v1/{{resource}}/2022-07-24 HTTP/1.1
+content-type: application/json
+authorization: {{token}}
+###

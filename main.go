@@ -55,6 +55,11 @@ func initRouter() *gin.Engine {
 		v1.POST("/guesses", middlewares.Auth(), controllers.MakeGuess)
 		v1.PATCH("/guesses/:date", middlewares.Auth(), controllers.UpdateGuess)
 
+		v1.GET("/answers", middlewares.Auth(), controllers.GetAnswers)
+		v1.GET("/answers/:date", middlewares.Auth(), controllers.GetAnswer)
+		v1.POST("/answers", middlewares.Auth(), middlewares.RoleAdmin(), controllers.CreateAnswer)
+		v1.PATCH("/answers/:date", middlewares.Auth(), middlewares.RoleAdmin(), controllers.UpdateAnswer)
+
 		v1.GET("/results", middlewares.Auth(), controllers.GetResults)
 	}
 

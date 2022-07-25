@@ -16,5 +16,5 @@ func Connect(connectionString string) {
 	}
 }
 func Migrate() {
-	Instance.AutoMigrate(&models.User{}, &models.Guess{}, &models.Hint{})
+	Instance.AutoMigrate(&models.User{}, &models.Guess{}, &models.Hint{}, &models.Answer{})
 }
