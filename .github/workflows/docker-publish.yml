@@ -90,3 +90,25 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: cosign sign ${{ steps.meta.outputs.tags }}@${{ steps.build-and-push.outputs.digest }}
+    outputs:
+      image_name: ${{ steps.meta.outputs.tags }}@${{ steps.build-and-push.outputs.digest }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      
+      - name: pull image on remote server
+        run: DOCKER_HOST=ssh://${{ secrets.DEPLOY_USER_HOST }} docker pull ${{ needs.image_name }}
+
+      - name: stop existing image
+        run: DOCKER_HOST=ssh://${{ secrets.DEPLOY_USER_HOST }} docker rm -f go-api 2> /dev/null
+      
+      - name: run new image on remote server
+        run: DOCKER_HOST=ssh://${{ secrets.DEPLOY_USER_HOST }} docker container run --name go-api -v go-api_db:/app/db -d -p 8080:8080 ${{ needs.image_name }}
