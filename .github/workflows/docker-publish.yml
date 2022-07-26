@@ -105,10 +105,10 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       
       - name: pull image on remote server
-        run: DOCKER_HOST=ssh://${{ secrets.DEPLOY_USER_HOST }} docker pull ${{ needs.image_name }}
+        run: DOCKER_HOST=ssh://${{ secrets.DEPLOY_USER_HOST }} docker pull ${{ needs.build.outputs.image_name }}
 
       - name: stop existing image
         run: DOCKER_HOST=ssh://${{ secrets.DEPLOY_USER_HOST }} docker rm -f go-api 2> /dev/null
       
       - name: run new image on remote server
-        run: DOCKER_HOST=ssh://${{ secrets.DEPLOY_USER_HOST }} docker container run --name go-api -v go-api_db:/app/db -d -p 8080:8080 ${{ needs.image_name }}
+        run: DOCKER_HOST=ssh://${{ secrets.DEPLOY_USER_HOST }} docker container run --name go-api -v go-api_db:/app/db -d -p 8080:8080 ${{ needs.build.outputs.image_name }}
