@@ -24,8 +24,8 @@ func initRouter() *gin.Engine {
 
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"*"},
-		AllowMethods: []string{"POST", "PUT", "PATCH"},
-		AllowHeaders: []string{"Content-Type,access-control-allow-origin, access-control-allow-headers"},
+		AllowMethods: []string{"POST", "PATCH", "GET"},
+		AllowHeaders: []string{"Content-Type,Authorization,access-control-allow-origin, access-control-allow-headers"},
 	}))
 
 	v1 := router.Group("/v1")
